@@ -7,11 +7,11 @@ import 'controller.dart';
 
 class SlidableScrollingBehavior extends StatefulWidget {
   const SlidableScrollingBehavior({
-    Key? key,
     required this.controller,
-    this.closeOnScroll = true,
     required this.child,
-  }) : super(key: key);
+    super.key,
+    this.closeOnScroll = true,
+  });
 
   final SlidableController controller;
 

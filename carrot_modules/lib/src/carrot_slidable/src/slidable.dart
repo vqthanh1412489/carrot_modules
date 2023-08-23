@@ -19,7 +19,8 @@ class Slidable extends StatefulWidget {
   /// The [enabled], [closeOnScroll], [direction], [dragStartBehavior],
   /// [useTextDirection] and [child] arguments must not be null.
   const Slidable({
-    Key? key,
+    required this.child,
+    super.key,
     this.groupTag,
     this.enabled = true,
     this.closeOnScroll = true,
@@ -28,8 +29,7 @@ class Slidable extends StatefulWidget {
     this.direction = Axis.horizontal,
     this.dragStartBehavior = DragStartBehavior.down,
     this.useTextDirection = true,
-    required this.child,
-  }) : super(key: key);
+  });
 
   /// Whether this slidable is interactive.
   ///
@@ -161,9 +161,7 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
   void updateController() {
     controller
       ..enableStartActionPane = startActionPane != null
-      ..startActionPaneExtentRatio = startActionPane?.extentRatio ?? 0;
-
-    controller
+      ..startActionPaneExtentRatio = startActionPane?.extentRatio ?? 0
       ..enableEndActionPane = endActionPane != null
       ..endActionPaneExtentRatio = endActionPane?.extentRatio ?? 0;
   }
@@ -187,7 +185,7 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
   }
 
   void updateMoveAnimation() {
-    final double end = controller.direction.value.toDouble();
+    final end = controller.direction.value.toDouble();
     moveAnimation = controller.animation.drive(
       Tween<Offset>(
         begin: Offset.zero,
@@ -280,10 +278,9 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
 
 class _SlidableControllerScope extends InheritedWidget {
   const _SlidableControllerScope({
-    Key? key,
     required this.controller,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final SlidableController? controller;
 
@@ -306,13 +303,13 @@ class _SlidableClipper extends CustomClipper<Rect> {
   Rect getClip(Size size) {
     switch (axis) {
       case Axis.horizontal:
-        final double offset = controller.ratio * size.width;
+        final offset = controller.ratio * size.width;
         if (offset < 0) {
           return Rect.fromLTRB(size.width + offset, 0, size.width, size.height);
         }
         return Rect.fromLTRB(0, 0, offset, size.height);
       case Axis.vertical:
-        final double offset = controller.ratio * size.height;
+        final offset = controller.ratio * size.height;
         if (offset < 0) {
           return Rect.fromLTRB(
             0,

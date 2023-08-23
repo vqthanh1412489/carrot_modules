@@ -5,12 +5,12 @@ import 'package:flutter/widgets.dart';
 
 class ActionPaneConfiguration extends InheritedWidget {
   const ActionPaneConfiguration({
-    Key? key,
     required this.alignment,
     required this.direction,
     required this.isStartActionPane,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+    super.key,
+  });
 
   final Alignment alignment;
   final Axis direction;

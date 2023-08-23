@@ -1,18 +1,18 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 // INTERNAL USE
 // ignore_for_file: public_member_api_docs
 
 class FlexExitTransition extends MultiChildRenderObjectWidget {
-  FlexExitTransition({
-    Key? key,
+  const FlexExitTransition({
     required this.mainAxisExtent,
     required this.direction,
     required this.startToEnd,
     required this.initialExtentRatio,
-    required List<Widget> children,
-  }) : super(key: key, children: children);
+    required super.children,
+    super.key,
+  });
 
   /// The direction to use as the main axis.
   final Axis direction;
@@ -54,11 +54,11 @@ class _RenderFlexExitTransition extends RenderBox
         ContainerRenderObjectMixin<RenderBox, _FlexExitTransitionParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _FlexExitTransitionParentData> {
   _RenderFlexExitTransition({
+    required Animation<double> mainAxisExtent,
+    required bool startToEnd,
     List<RenderBox>? children,
     Axis direction = Axis.horizontal,
-    required Animation<double> mainAxisExtent,
     double? initialExtentRatio,
-    required bool startToEnd,
   })  : _direction = direction,
         _mainAxisExtent = mainAxisExtent,
         _initialExtentRatio = initialExtentRatio,

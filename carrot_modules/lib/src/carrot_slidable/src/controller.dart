@@ -72,13 +72,13 @@ class EndGesture {
 /// Represents a gesture used explicitly to open a [Slidable].
 class OpeningGesture extends EndGesture {
   /// Creates an [OpeningGesture].
-  const OpeningGesture(double velocity) : super(velocity);
+  const OpeningGesture(super.velocity);
 }
 
 /// Represents a gesture used explicitly to close a [Slidable].
 class ClosingGesture extends EndGesture {
   /// Creates a [ClosingGesture].
-  const ClosingGesture(double velocity) : super(velocity);
+  const ClosingGesture(super.velocity);
 }
 
 /// Represents an end gesture without velocity.
@@ -205,7 +205,7 @@ class SlidableController {
   /// [ActionPaneType.start].
   double get ratio => _animationController.value * direction.value;
   set ratio(double value) {
-    final newRatio = (actionPaneConfigurator?.normalizeRatio(value)) ?? value;
+    final newRatio = actionPaneConfigurator?.normalizeRatio(value) ?? value;
     if (_acceptRatio(newRatio) && newRatio != ratio) {
       direction.value = newRatio.sign.toInt();
       _animationController.value = newRatio.abs();
@@ -337,15 +337,17 @@ class SlidableController {
 
   /// Disposes the controller.
   void dispose() {
-    _animationController.stop();
-    _animationController.dispose();
-    direction.removeListener(_onDirectionChanged);
-    direction.dispose();
+    _animationController
+      ..stop()
+      ..dispose();
+    direction
+      ..removeListener(_onDirectionChanged)
+      ..dispose();
   }
 }
 
 class _ValueNotifier<T> extends ValueNotifier<T> {
-  _ValueNotifier(T value) : super(value);
+  _ValueNotifier(super.value);
 
   bool get _hasListeners => hasListeners;
 }

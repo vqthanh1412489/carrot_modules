@@ -9,11 +9,11 @@ import 'notifications.dart';
 class SlidableAutoCloseBehavior extends StatefulWidget {
   /// Creates a [SlidableAutoCloseBehavior].
   const SlidableAutoCloseBehavior({
-    Key? key,
+    required this.child,
+    super.key,
     this.closeWhenOpened = true,
     this.closeWhenTapped = true,
-    required this.child,
-  }) : super(key: key);
+  });
 
   /// Indicates whether all the [Slidable] within the same group should be
   /// closed when one of the group is opened.
@@ -65,11 +65,10 @@ class _SlidableAutoCloseBehaviorState extends State<SlidableAutoCloseBehavior> {
 
 class _SlidableAutoCloseData extends InheritedWidget {
   const _SlidableAutoCloseData({
-    Key? key,
     required this.closeWhenOpened,
     required this.closeWhenTapped,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final bool closeWhenOpened;
   final bool closeWhenTapped;
@@ -88,11 +87,11 @@ class _SlidableAutoCloseData extends InheritedWidget {
 class SlidableAutoCloseBehaviorInteractor extends StatelessWidget {
   /// INTERNAL USE
   const SlidableAutoCloseBehaviorInteractor({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -147,11 +146,11 @@ class SlidableAutoCloseNotification {
 class SlidableAutoCloseInteractor extends StatelessWidget {
   /// INTERNAL USE
   const SlidableAutoCloseInteractor({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -182,11 +181,11 @@ class SlidableAutoCloseInteractor extends StatelessWidget {
 class SlidableAutoCloseBehaviorListener extends StatelessWidget {
   /// INTERNAL USE
   const SlidableAutoCloseBehaviorListener({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -218,11 +217,11 @@ class SlidableAutoCloseBehaviorListener extends StatelessWidget {
 class SlidableAutoCloseNotificationSender extends StatelessWidget {
   /// INTERNAL USE
   const SlidableAutoCloseNotificationSender({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -287,11 +286,11 @@ class SlidableAutoCloseBarrierNotification {
 class SlidableAutoCloseBarrierInteractor extends StatelessWidget {
   /// INTERNAL USE
   const SlidableAutoCloseBarrierInteractor({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -322,11 +321,11 @@ class SlidableAutoCloseBarrierInteractor extends StatelessWidget {
 class SlidableAutoCloseBarrierNotificationSender extends StatefulWidget {
   /// INTERNAL USE
   const SlidableAutoCloseBarrierNotificationSender({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -410,11 +409,11 @@ class _SlidableAutoCloseBarrierNotificationSenderState extends State<SlidableAut
 class SlidableAutoCloseBarrierBehaviorListener extends StatefulWidget {
   /// INTERNAL USE
   const SlidableAutoCloseBarrierBehaviorListener({
-    Key? key,
     required this.groupTag,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// {@macro slidable.groupTag}
   final Object? groupTag;
@@ -428,12 +427,15 @@ class SlidableAutoCloseBarrierBehaviorListener extends StatefulWidget {
   final Widget child;
 
   @override
-  _SlidableAutoCloseBarrierBehaviorListenerState createState() => _SlidableAutoCloseBarrierBehaviorListenerState();
+  SlidableAutoCloseBarrierBehaviorListenerState createState() => SlidableAutoCloseBarrierBehaviorListenerState();
 }
 
-class _SlidableAutoCloseBarrierBehaviorListenerState extends State<SlidableAutoCloseBarrierBehaviorListener> {
+/// INTERNAL USE
+class SlidableAutoCloseBarrierBehaviorListenerState extends State<SlidableAutoCloseBarrierBehaviorListener> {
+  /// Whether the barrier is absorbing.
   bool absorbing = false;
 
+  /// Handles the tap on the widget.
   void handleOnTap() {
     if (!widget.controller.closing) {
       SlidableGroupNotification.dispatch(
@@ -475,12 +477,11 @@ class _SlidableAutoCloseBarrierBehaviorListenerState extends State<SlidableAutoC
 class _SlidableNotificationSender extends StatefulWidget {
   /// INTERNAL USE
   const _SlidableNotificationSender({
-    Key? key,
     required this.controller,
     required this.onStatusChanged,
     required this.enabled,
     required this.child,
-  }) : super(key: key);
+  });
 
   final SlidableController controller;
 

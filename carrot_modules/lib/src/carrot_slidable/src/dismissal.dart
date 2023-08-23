@@ -9,11 +9,11 @@ import 'controller.dart';
 
 class SlidableDismissal extends StatefulWidget {
   const SlidableDismissal({
-    Key? key,
     required this.axis,
     required this.controller,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Axis axis;
   final Widget child;
@@ -70,24 +70,30 @@ class _SlidableDismissalState extends State<SlidableDismissal> with SingleTicker
   @override
   Widget build(BuildContext context) {
     if (resized) {
-      assert(() {
-        if (resizeAnimation.status != AnimationStatus.forward) {
-          assert(resizeAnimation.status == AnimationStatus.completed);
-          throw FlutterError.fromParts(
-            <DiagnosticsNode>[
-              ErrorSummary(
-                'A dismissed Slidable widget is still part of the tree.',
-              ),
-              ErrorHint(
-                'Make sure to implement the onDismissed handle of the '
-                'ActionPane and to immediately remove the Slidable widget from '
-                'the application once that handler has fired.',
-              )
-            ],
-          );
-        }
-        return true;
-      }());
+      assert(
+        () {
+          if (resizeAnimation.status != AnimationStatus.forward) {
+            assert(
+              resizeAnimation.status == AnimationStatus.completed,
+              'A dismissed Slidable widget is still part of the tree.',
+            );
+            throw FlutterError.fromParts(
+              <DiagnosticsNode>[
+                ErrorSummary(
+                  'A dismissed Slidable widget is still part of the tree.',
+                ),
+                ErrorHint(
+                  'Make sure to implement the onDismissed handle of the '
+                  'ActionPane and to immediately remove the Slidable widget from '
+                  'the application once that handler has fired.',
+                )
+              ],
+            );
+          }
+          return true;
+        }(),
+        'A dismissed Slidable widget is still part of the tree.',
+      );
     }
 
     return _SizeTransition(
@@ -107,11 +113,10 @@ class _SizeTransition extends AnimatedWidget {
   /// defaults to 0.0, which centers the child along the main axis during the
   /// transition.
   const _SizeTransition({
-    Key? key,
-    this.axis = Axis.vertical,
     required Animation<double> sizeFactor,
+    this.axis = Axis.vertical,
     this.child,
-  }) : super(key: key, listenable: sizeFactor);
+  }) : super(listenable: sizeFactor);
 
   /// [Axis.horizontal] if [sizeFactor] modifies the width, otherwise
   /// [Axis.vertical].

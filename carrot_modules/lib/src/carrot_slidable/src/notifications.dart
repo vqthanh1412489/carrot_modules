@@ -19,15 +19,18 @@ class SlidableGroupNotification {
     final widget = context.getElementForInheritedWidgetOfExactType<_InheritedSlidableNotification<T>>()?.widget
         as _InheritedSlidableNotification<T>?;
 
-    assert(() {
-      if (assertParentExists && widget == null) {
-        throw FlutterError(
-          'SlidableGroupBehavior.of<$T> called with a context that '
-          'does not contain a SlidableGroupBehavior<$T>.',
-        );
-      }
-      return true;
-    }());
+    assert(
+      () {
+        if (assertParentExists && widget == null) {
+          throw FlutterError(
+            'SlidableGroupBehavior.of<$T> called with a context that '
+            'does not contain a SlidableGroupBehavior<$T>.',
+          );
+        }
+        return true;
+      }(),
+      '',
+    );
     if (widget != null) {
       return SlidableGroupNotificationDispatcher<T>._(widget);
     }
@@ -79,10 +82,10 @@ class SlidableGroupNotificationDispatcher<T> {
 class SlidableGroupBehavior<T> extends StatefulWidget {
   /// Creates a SlidableGroupBehavior.
   const SlidableGroupBehavior({
-    Key? key,
-    this.onNotification,
     required this.child,
-  }) : super(key: key);
+    super.key,
+    this.onNotification,
+  });
 
   /// Callback that can modified a notification before to be dispatched to
   /// listeners.
@@ -114,14 +117,11 @@ class _SlidableGroupBehaviorState<T> extends State<SlidableGroupBehavior<T>> {
 
 class _InheritedSlidableNotification<T> extends InheritedWidget {
   const _InheritedSlidableNotification({
-    Key? key,
     required this.onNotification,
     required this.notifier,
-    required Widget child,
-  }) : super(
-          key: key,
-          child: child,
-        );
+    required super.child,
+    super.key,
+  });
 
   final T? Function(T notification)? onNotification;
   final ValueNotifier<T?> notifier;
@@ -143,10 +143,10 @@ class _InheritedSlidableNotification<T> extends InheritedWidget {
 class SlidableGroupBehaviorListener<T> extends StatefulWidget {
   /// Creates a [SlidableGroupBehaviorListener].
   const SlidableGroupBehaviorListener({
-    Key? key,
     required this.onNotification,
     required this.child,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// The callback to invoke when a notification is dispatched.
   final ValueChanged<T> onNotification;

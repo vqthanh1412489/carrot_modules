@@ -18,17 +18,16 @@ class CustomSlidableAction extends StatelessWidget {
   ///
   /// The [flex] argument must also be greater than 0.
   const CustomSlidableAction({
-    Key? key,
+    required this.onPressed,
+    required this.child,
+    super.key,
     this.flex = _kFlex,
     this.backgroundColor = _kBackgroundColor,
     this.foregroundColor,
     this.autoClose = _kAutoClose,
     this.borderRadius = BorderRadius.zero,
     this.padding,
-    required this.onPressed,
-    required this.child,
-  })  : assert(flex > 0),
-        super(key: key);
+  }) : assert(flex > 0, 'The flex factor must be greater than 0.');
 
   /// {@template slidable.actions.flex}
   /// The flex factor to use for this child.
@@ -49,8 +48,8 @@ class CustomSlidableAction extends StatelessWidget {
   /// {@template slidable.actions.foregroundColor}
   /// The foreground color of this action.
   ///
-  /// Defaults to [Colors.black] if [background]'s brightness is
-  /// [Brightness.light], or to [Colors.white] if [background]'s brightness is
+  /// Defaults to [Colors.black] if [backgroundColor]'s brightness is
+  /// [Brightness.light], or to [Colors.white] if [backgroundColor]'s brightness is
   /// [Brightness.dark].
   /// {@endtemplate}
   final Color? foregroundColor;
@@ -94,10 +93,10 @@ class CustomSlidableAction extends StatelessWidget {
         child: OutlinedButton(
           onPressed: () => _handleTap(context),
           style: OutlinedButton.styleFrom(
+            foregroundColor: effectiveForegroundColor,
             padding: padding,
             backgroundColor: backgroundColor,
-            primary: effectiveForegroundColor,
-            onSurface: effectiveForegroundColor,
+            disabledForegroundColor: effectiveForegroundColor.withOpacity(0.38),
             shape: RoundedRectangleBorder(
               borderRadius: borderRadius,
             ),
@@ -128,20 +127,19 @@ class SlidableAction extends StatelessWidget {
   ///
   /// The [flex] argument must also be greater than 0.
   const SlidableAction({
-    Key? key,
+    required this.onPressed,
+    super.key,
     this.flex = _kFlex,
     this.backgroundColor = _kBackgroundColor,
     this.foregroundColor,
     this.autoClose = _kAutoClose,
-    required this.onPressed,
     this.icon,
     this.spacing = 4,
     this.label,
     this.borderRadius = BorderRadius.zero,
     this.padding,
-  })  : assert(flex > 0),
-        assert(icon != null || label != null),
-        super(key: key);
+  })  : assert(flex > 0, 'The flex factor must be greater than 0.'),
+        assert(icon != null || label != null, 'You must set either an icon or a label.');
 
   /// {@macro slidable.actions.flex}
   final int flex;

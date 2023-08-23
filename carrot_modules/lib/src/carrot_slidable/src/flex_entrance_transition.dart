@@ -5,13 +5,13 @@ import 'package:flutter/widgets.dart';
 // ignore_for_file: public_member_api_docs
 
 class FlexEntranceTransition extends MultiChildRenderObjectWidget {
-  FlexEntranceTransition({
-    Key? key,
+  const FlexEntranceTransition({
     required this.mainAxisPosition,
     required this.direction,
     required this.startToEnd,
-    required List<Widget> children,
-  }) : super(key: key, children: children);
+    required super.children,
+    super.key,
+  });
 
   /// The direction to use as the main axis.
   final Axis direction;
@@ -49,10 +49,10 @@ class _RenderFlexEntranceTransition extends RenderBox
         ContainerRenderObjectMixin<RenderBox, _FlexEntranceTransitionParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _FlexEntranceTransitionParentData> {
   _RenderFlexEntranceTransition({
-    List<RenderBox>? children,
-    Axis direction = Axis.horizontal,
     required Animation<double> mainAxisPosition,
     required bool startToEnd,
+    List<RenderBox>? children,
+    Axis direction = Axis.horizontal,
   })  : _direction = direction,
         _mainAxisPosition = mainAxisPosition,
         _startToEnd = startToEnd {
@@ -141,23 +141,26 @@ class _RenderFlexEntranceTransition extends RenderBox
     int totalFlex = 0;
     visitChildren((child) {
       final parentData = child.parentData as _FlexEntranceTransitionParentData?;
-      assert(() {
-        if (parentData!.flex != null) {
-          return true;
-        } else {
-          throw FlutterError.fromParts(
-            [
-              ErrorSummary(
-                'DrawerMotion only supports children with non-zero flex',
-              ),
-              ErrorDescription(
-                'Only children wrapped into Flexible widgets with non-zero '
-                'flex are supported',
-              ),
-            ],
-          );
-        }
-      }());
+      assert(
+        () {
+          if (parentData!.flex != null) {
+            return true;
+          } else {
+            throw FlutterError.fromParts(
+              [
+                ErrorSummary(
+                  'DrawerMotion only supports children with non-zero flex',
+                ),
+                ErrorDescription(
+                  'Only children wrapped into Flexible widgets with non-zero '
+                  'flex are supported',
+                ),
+              ],
+            );
+          }
+        }(),
+        '',
+      );
       totalFlex += parentData!.flex!;
     });
     return totalFlex;

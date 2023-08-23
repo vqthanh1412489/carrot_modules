@@ -45,18 +45,26 @@ class ActionPane extends StatefulWidget {
   /// (both exclusives).
   /// The [children] argument must not be null.
   const ActionPane({
-    Key? key,
-    this.extentRatio = _defaultExtentRatio,
     required this.motion,
+    required this.children,
+    super.key,
+    this.extentRatio = _defaultExtentRatio,
     this.dismissible,
     this.dragDismissible = true,
     this.openThreshold,
     this.closeThreshold,
-    required this.children,
-  })  : assert(extentRatio > 0 && extentRatio <= 1),
-        assert(openThreshold == null || (openThreshold > 0 && openThreshold < 1)),
-        assert(closeThreshold == null || (closeThreshold > 0 && closeThreshold < 1)),
-        super(key: key);
+  })  : assert(
+          extentRatio > 0 && extentRatio <= 1,
+          'The extentRatio must be between 0 (excluded) and 1 (included).',
+        ),
+        assert(
+          openThreshold == null || (openThreshold > 0 && openThreshold < 1),
+          'The openThreshold must be between 0 (excluded) and 1 (excluded).',
+        ),
+        assert(
+          closeThreshold == null || (closeThreshold > 0 && closeThreshold < 1),
+          'The closeThreshold must be between 0 (excluded) and 1 (excluded).',
+        );
 
   /// The total extent of this [ActionPane] relatively to the enclosing
   /// [Slidable] widget.
@@ -237,10 +245,9 @@ class _ActionPaneState extends State<ActionPane> implements RatioConfigurator {
 
 class _ActionPaneScope extends InheritedWidget {
   const _ActionPaneScope({
-    Key? key,
+    required super.child,
     this.actionPaneData,
-    required Widget child,
-  }) : super(key: key, child: child);
+  });
 
   final ActionPaneData? actionPaneData;
 
