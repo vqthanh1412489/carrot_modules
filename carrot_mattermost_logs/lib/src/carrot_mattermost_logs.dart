@@ -28,7 +28,11 @@ class LogsRemoteServices {
   /// #Client-Order-Logs
   static const orderLogChannelID = '7iu481qcnt8c3xgmi3pnspufzw';
 
-  static final LogsRemoteServices _instance = LogsRemoteServices._privateConstructor();
+  /// #dev-log-social
+  static const testAppLogChannelID = 'sskreweg878yzyed6qiyjhniue';
+
+  static final LogsRemoteServices _instance =
+      LogsRemoteServices._privateConstructor();
 
   /// {@macro mattermost_logs}
   static LogsRemoteServices get instance => _instance;
@@ -119,7 +123,10 @@ class LogsRemoteServices {
       text += _addPlatform();
       text += _addTimeLog();
 
-      await _pushLogToMatterMostChannel(channelID: keyLogChannelID, message: text);
+      await _pushLogToMatterMostChannel(
+        channelID: keyLogChannelID,
+        message: text,
+      );
       return true;
     } catch (e) {
       log('pushKeyLogToRemote error $e');
@@ -143,7 +150,37 @@ class LogsRemoteServices {
       text += _addCurrentUserData(currentUserData);
       text += _addTimeLog();
 
-      await _pushLogToMatterMostChannel(channelID: orderLogChannelID, message: text);
+      await _pushLogToMatterMostChannel(
+        channelID: orderLogChannelID,
+        message: text,
+      );
+      return true;
+    } catch (e) {
+      log('pushOrderLogToRemote error $e');
+      return false;
+    }
+  }
+
+  /// pushOrderLogToRemote
+  Future<bool> pushTestappLogToRemote({
+    String? message,
+    String? currentUserData,
+    // String? appVersion,
+    // String? appProvince,
+  }) async {
+    try {
+      var text = addTitle('Social error Error');
+      text += addMessage(message);
+      // text += _addAppVersion(appVersion);
+      // text += _addProvince(appProvince);
+      text += _addPlatform();
+      text += _addCurrentUserData(currentUserData);
+      text += _addTimeLog();
+
+      await _pushLogToMatterMostChannel(
+        channelID: testAppLogChannelID,
+        message: text,
+      );
       return true;
     } catch (e) {
       log('pushOrderLogToRemote error $e');

@@ -192,7 +192,7 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
     }
   }
 
-  Icon get _iconBack => const Icon(Icons.arrow_back);
+  Icon get _iconBack => const Icon(Icons.arrow_back, color: Colors.amber,);
 
   Widget _textField(BuildContext context) => TextField(
         controller: _queryTextController,
