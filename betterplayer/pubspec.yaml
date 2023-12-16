@@ -17,7 +17,11 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.5
   wakelock:
-    path: ../wakelock
+    # path: ../wakelock
+    git:
+      url: https://github.com/vqthanh1412489/carrot_modules.git
+      ref: main
+      path: wakelock
   meta: ^1.8.0
   # flutter_widget_from_html_core: 0.10.3
   visibility_detector: ^0.3.3
