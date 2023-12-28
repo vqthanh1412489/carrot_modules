@@ -207,7 +207,31 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
                 color: Theme.of(context).brightness == Brightness.light ? Colors.black45 : null,
                 fontSize: 16.0,
               ),
-              border: InputBorder.none,
+              border: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+                focusedErrorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
             ),
       );
 }
@@ -215,7 +239,7 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
 class _Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(constraints: const BoxConstraints(maxHeight: 2.0), child: const LinearProgressIndicator());
+    return Container(constraints: const BoxConstraints(maxHeight: 2.0), child: const LinearProgressIndicator(color: Colors.orange,));
   }
 }
 
