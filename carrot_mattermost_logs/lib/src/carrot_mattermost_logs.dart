@@ -29,7 +29,10 @@ class LogsRemoteServices {
   static const orderLogChannelID = '7iu481qcnt8c3xgmi3pnspufzw';
 
   /// #dev-log-social
-  static const testAppLogChannelID = 'sskreweg878yzyed6qiyjhniue';
+  // static const devLogSocialChannelId = 'sskreweg878yzyed6qiyjhniue';
+
+  /// #cl_payment_logs
+  static const clPaymentLogsChannelId = 'gd5fh7ieefbn3d515fxcahx6iy';
 
   static final LogsRemoteServices _instance =
       LogsRemoteServices._privateConstructor();
@@ -161,29 +164,55 @@ class LogsRemoteServices {
     }
   }
 
-  /// pushOrderLogToRemote
-  Future<bool> pushTestappLogToRemote({
+  /// devLogSocialChannelId
+  // Future<bool> pushTestappLogToRemote({
+  //   String? message,
+  //   String? currentUserData,
+  //   // String? appVersion,
+  //   // String? appProvince,
+  // }) async {
+  //   try {
+  //     var text = addTitle('Social error Error');
+  //     text += addMessage(message);
+  //     // text += _addAppVersion(appVersion);
+  //     // text += _addProvince(appProvince);
+  //     text += _addPlatform();
+  //     text += _addCurrentUserData(currentUserData);
+  //     text += _addTimeLog();
+
+  //     await _pushLogToMatterMostChannel(
+  //       channelID: devLogSocialChannelId,
+  //       message: text,
+  //     );
+  //     return true;
+  //   } catch (e) {
+  //     log('pushOrderLogToRemote error $e');
+  //     return false;
+  //   }
+  // }
+  /// devLogSocialChannelId
+  Future<bool> pushClPaymentLogs({
     String? message,
     String? currentUserData,
-    // String? appVersion,
-    // String? appProvince,
+    String? appVersion,
+    String? appProvince,
   }) async {
     try {
-      var text = addTitle('Social error Error');
+      var text = addTitle('cl_payment_logs Error');
       text += addMessage(message);
-      // text += _addAppVersion(appVersion);
-      // text += _addProvince(appProvince);
+      text += _addAppVersion(appVersion);
+      text += _addProvince(appProvince);
       text += _addPlatform();
       text += _addCurrentUserData(currentUserData);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
-        channelID: testAppLogChannelID,
+        channelID: clPaymentLogsChannelId,
         message: text,
       );
       return true;
     } catch (e) {
-      log('pushOrderLogToRemote error $e');
+      log('pushClPaymentLogs error $e');
       return false;
     }
   }
