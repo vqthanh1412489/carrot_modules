@@ -34,6 +34,9 @@ class LogsRemoteServices {
   /// #cl_payment_logs
   static const clPaymentLogsChannelId = 'gd5fh7ieefbn3d515fxcahx6iy';
 
+  /// wrong_api_exception
+  static const wrongApiExceptionChannelId = '67xpog5x67817k1e3iysmn9gmo';
+
   static final LogsRemoteServices _instance =
       LogsRemoteServices._privateConstructor();
 
@@ -213,6 +216,33 @@ class LogsRemoteServices {
       return true;
     } catch (e) {
       log('pushClPaymentLogs error $e');
+      return false;
+    }
+  }
+
+  /// wrong_api_exception
+  Future<bool> wrongApiExceptionLogs({
+    String? message,
+    String? currentUserData,
+    String? appVersion,
+    String? appProvince,
+  }) async {
+    try {
+      var text = addTitle('wrong_api_exception Error');
+      text += addMessage(message);
+      text += _addAppVersion(appVersion);
+      text += _addProvince(appProvince);
+      text += _addPlatform();
+      text += _addCurrentUserData(currentUserData);
+      text += _addTimeLog();
+
+      await _pushLogToMatterMostChannel(
+        channelID: wrongApiExceptionChannelId,
+        message: text,
+      );
+      return true;
+    } catch (e) {
+      log('wrong_api_exception error $e');
       return false;
     }
   }
