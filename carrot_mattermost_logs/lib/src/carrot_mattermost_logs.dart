@@ -20,7 +20,7 @@ class LogsRemoteServices {
   // static const orderLogChannelID = 'nifq7jef87n47mwba5b6e9s9ka';
 
   static const String _botToken = 'jzjzqftwxbgs7y6igxpd7wmbey';
-  static const String _host = 'https://workspace.villteam.tech/api/v4';
+  static const String _host = 'https://workspace.villvietnam.vn/api/v4';
 
   /// #Client-Key-Logs
   static const keyLogChannelID = 'rmg3fw5zzpr6txqzhdsz3n6udy';
