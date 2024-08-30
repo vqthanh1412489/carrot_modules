@@ -10,15 +10,6 @@ import 'package:dio/dio.dart';
 class LogsRemoteServices {
   LogsRemoteServices._privateConstructor();
 
-  // static const String _botToken = 'kyfci76ik7fcpk13ptdyf9wqoc';
-  // static const String _host = 'https://mattermost.dev.villteam.tech/api/v4';
-
-  // /// #Client-Key-Logs
-  // static const keyLogChannelID = 'nifq7jef87n47mwba5b6e9s9ka';
-
-  // /// #Client-Order-Logs
-  // static const orderLogChannelID = 'nifq7jef87n47mwba5b6e9s9ka';
-
   static const String _botToken = 'jzjzqftwxbgs7y6igxpd7wmbey';
   static const String _host = 'https://workspace.villvietnam.vn/api/v4';
 
@@ -92,24 +83,22 @@ class LogsRemoteServices {
     return '\nTimelog: `${DateTime.now()}`';
   }
 
-  /// add platform to message
-  String _addPlatform() {
-    return '\nPlatform: `${Platform.operatingSystem}`';
-  }
-
   /// add app version to message
-  String _addAppVersion(String? appVersion) {
-    return '\nApp Version: `$appVersion`';
+  String _addAppPackageInfo(String? appVersion) {
+    return '\nVersion: `$appVersion` - Platform: `${Platform.operatingSystem}`';
   }
 
   /// add province to message
-  String _addProvince(String? province) {
-    return '\nProvince: `$province`';
+  String _addProvince(String? province, [String? subProvince]) {
+    if (subProvince == null) {
+      return '\nProvince: `$province`';
+    }
+    return '\nProvince: `$province` - SubProvince: `$subProvince`';
   }
 
   /// add current user data to message
-  String _addCurrentUserData(String? currentUserData) {
-    return '\nUser: `$currentUserData`';
+  String _addCurrentUser(String? currentUser) {
+    return '\nUser: `$currentUser`';
   }
 
   /// pushKeyLogToRemote
@@ -119,14 +108,14 @@ class LogsRemoteServices {
     String? message,
     String? appVersion,
     String? appProvince,
+    String? subProvince,
   }) async {
     try {
       var text = addTitle(title);
       text += addMessage(message);
       text += _addKey(key);
-      text += _addAppVersion(appVersion);
-      text += _addProvince(appProvince);
-      text += _addPlatform();
+      text += _addAppPackageInfo(appVersion);
+      text += _addProvince(appProvince, subProvince);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
@@ -146,14 +135,14 @@ class LogsRemoteServices {
     String? currentUserData,
     String? appVersion,
     String? appProvince,
+    String? subProvince,
   }) async {
     try {
-      var text = addTitle('Order Error');
+      var text = addTitle('onOrderPlace Error');
       text += addMessage(message);
-      text += _addAppVersion(appVersion);
-      text += _addProvince(appProvince);
-      text += _addPlatform();
-      text += _addCurrentUserData(currentUserData);
+      text += _addAppPackageInfo(appVersion);
+      text += _addProvince(appProvince, subProvince);
+      text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
@@ -168,32 +157,6 @@ class LogsRemoteServices {
   }
 
   /// devLogSocialChannelId
-  // Future<bool> pushTestappLogToRemote({
-  //   String? message,
-  //   String? currentUserData,
-  //   // String? appVersion,
-  //   // String? appProvince,
-  // }) async {
-  //   try {
-  //     var text = addTitle('Social error Error');
-  //     text += addMessage(message);
-  //     // text += _addAppVersion(appVersion);
-  //     // text += _addProvince(appProvince);
-  //     text += _addPlatform();
-  //     text += _addCurrentUserData(currentUserData);
-  //     text += _addTimeLog();
-
-  //     await _pushLogToMatterMostChannel(
-  //       channelID: devLogSocialChannelId,
-  //       message: text,
-  //     );
-  //     return true;
-  //   } catch (e) {
-  //     log('pushOrderLogToRemote error $e');
-  //     return false;
-  //   }
-  // }
-  /// devLogSocialChannelId
   Future<bool> pushClPaymentLogs({
     String? message,
     String? currentUserData,
@@ -203,10 +166,9 @@ class LogsRemoteServices {
     try {
       var text = addTitle('cl_payment_logs Error');
       text += addMessage(message);
-      text += _addAppVersion(appVersion);
+      text += _addAppPackageInfo(appVersion);
       text += _addProvince(appProvince);
-      text += _addPlatform();
-      text += _addCurrentUserData(currentUserData);
+      text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
@@ -230,10 +192,9 @@ class LogsRemoteServices {
     try {
       var text = addTitle('wrong_api_exception Error');
       text += addMessage(message);
-      text += _addAppVersion(appVersion);
+      text += _addAppPackageInfo(appVersion);
       text += _addProvince(appProvince);
-      text += _addPlatform();
-      text += _addCurrentUserData(currentUserData);
+      text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
