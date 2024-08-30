@@ -68,8 +68,8 @@ class LogsRemoteServices {
   }
 
   /// add payload to message
-  String _addPayload(String? value) {
-    return '\nPayload: ```\n$value\n```';
+  String _addPayload(Map<String, dynamic>? value) {
+    return '\nPayload: `$value`';
   }
 
   /// add message to message
@@ -89,7 +89,7 @@ class LogsRemoteServices {
 
   /// add app version to message
   String _addAppInfo(String? appInfo) {
-    return '\nAppInfo: `$appInfo`';
+    return '\nAppInfo: $appInfo';
   }
 
   /// add province to message
@@ -135,7 +135,7 @@ class LogsRemoteServices {
     String? message,
     String? currentUserData,
     String? appInfo,
-    String? payload,
+    Map<String, dynamic>? payload,
   }) async {
     try {
       var text = _addTitle('onOrderPlace Error');
