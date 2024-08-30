@@ -67,6 +67,11 @@ class LogsRemoteServices {
     return '> **$title**';
   }
 
+  /// add payload to message
+  String _addPayload(String? value) {
+    return '\nPayload: ```\n$value\n```';
+  }
+
   /// add message to message
   String _addMessage(String? message) {
     return '\nMessage: $message';
@@ -130,10 +135,12 @@ class LogsRemoteServices {
     String? message,
     String? currentUserData,
     String? appInfo,
+    String? payload,
   }) async {
     try {
       var text = _addTitle('onOrderPlace Error');
       text += _addMessage(message);
+      text += _addPayload(payload);
       text += _addAppInfo(appInfo);
       text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
