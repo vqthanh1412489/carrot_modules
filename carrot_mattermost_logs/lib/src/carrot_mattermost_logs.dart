@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 
@@ -64,12 +63,12 @@ class LogsRemoteServices {
   }
 
   /// add title to message
-  String addTitle(String? title) {
+  String _addTitle(String? title) {
     return '> **$title**';
   }
 
   /// add message to message
-  String addMessage(String? message) {
+  String _addMessage(String? message) {
     return '\nMessage: $message';
   }
 
@@ -84,17 +83,17 @@ class LogsRemoteServices {
   }
 
   /// add app version to message
-  String _addAppPackageInfo(String? appVersion) {
-    return '\nVersion: `$appVersion` - Platform: `${Platform.operatingSystem}`';
+  String _addAppInfo(String? appInfo) {
+    return '\nAppInfo: `$appInfo`';
   }
 
   /// add province to message
-  String _addProvince(String? province, [String? subProvince]) {
-    if (subProvince == null) {
-      return '\nProvince: `$province`';
-    }
-    return '\nProvince: `$province` - SubProvince: `$subProvince`';
-  }
+  // String _addProvince(String? province, [String? subProvince]) {
+  //   if (subProvince == null) {
+  //     return '\nProvince: `$province`';
+  //   }
+  //   return '\nProvince: `$province` - SubProvince: `$subProvince`';
+  // }
 
   /// add current user data to message
   String _addCurrentUser(String? currentUser) {
@@ -106,16 +105,13 @@ class LogsRemoteServices {
     required String title,
     String? key,
     String? message,
-    String? appVersion,
-    String? appProvince,
-    String? subProvince,
+    String? appInfo,
   }) async {
     try {
-      var text = addTitle(title);
-      text += addMessage(message);
+      var text = _addTitle(title);
+      text += _addMessage(message);
       text += _addKey(key);
-      text += _addAppPackageInfo(appVersion);
-      text += _addProvince(appProvince, subProvince);
+      text += _addAppInfo(appInfo);
       text += _addTimeLog();
 
       await _pushLogToMatterMostChannel(
@@ -133,15 +129,12 @@ class LogsRemoteServices {
   Future<bool> pushOrderLogToRemote({
     String? message,
     String? currentUserData,
-    String? appVersion,
-    String? appProvince,
-    String? subProvince,
+    String? appInfo,
   }) async {
     try {
-      var text = addTitle('onOrderPlace Error');
-      text += addMessage(message);
-      text += _addAppPackageInfo(appVersion);
-      text += _addProvince(appProvince, subProvince);
+      var text = _addTitle('onOrderPlace Error');
+      text += _addMessage(message);
+      text += _addAppInfo(appInfo);
       text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
@@ -160,14 +153,12 @@ class LogsRemoteServices {
   Future<bool> pushClPaymentLogs({
     String? message,
     String? currentUserData,
-    String? appVersion,
-    String? appProvince,
+    String? appInfo,
   }) async {
     try {
-      var text = addTitle('cl_payment_logs Error');
-      text += addMessage(message);
-      text += _addAppPackageInfo(appVersion);
-      text += _addProvince(appProvince);
+      var text = _addTitle('cl_payment_logs Error');
+      text += _addMessage(message);
+      text += _addAppInfo(appInfo);
       text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
@@ -186,14 +177,12 @@ class LogsRemoteServices {
   Future<bool> wrongApiExceptionLogs({
     String? message,
     String? currentUserData,
-    String? appVersion,
-    String? appProvince,
+    String? appInfo,
   }) async {
     try {
-      var text = addTitle('wrong_api_exception Error');
-      text += addMessage(message);
-      text += _addAppPackageInfo(appVersion);
-      text += _addProvince(appProvince);
+      var text = _addTitle('wrong_api_exception Error');
+      text += _addMessage(message);
+      text += _addAppInfo(appInfo);
       text += _addCurrentUser(currentUserData);
       text += _addTimeLog();
 
