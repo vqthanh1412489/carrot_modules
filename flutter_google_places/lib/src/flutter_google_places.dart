@@ -368,7 +368,7 @@ class PredictionTile extends StatelessWidget {
       leading: const Icon(Icons.location_on),
       title: Text(
         prediction.description!,
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.labelMedium,
       ),
       onTap: () {
         if (onTap != null) {
